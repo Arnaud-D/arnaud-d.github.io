@@ -1,0 +1,135 @@
+<html>
+
+<head>
+  <title>GNUP : Générateur de nom d'université parisienne</title>
+  <meta charset="utf-8">
+  <script>
+    var words = [
+      "Paris",
+      "Sorbonne",
+      "V",
+      "XXIII",
+      "MMXII",
+      "nouvelle",
+      "Jussieu",
+      "Orsay",
+      "France",
+      "Nanterre",
+      "Versailles",
+      "Montigny-le-Bretonneux",
+      "Saclay",
+      "Sud",
+      "Nord",
+      "Est",
+      "Ouest",
+      "Louvre",
+      "Pierre-Marie",
+      "Curie",
+      "Panthéon",
+    ];
+
+    var future_words = [
+      "numérique",
+      "digitale",
+      "connectée",
+      "cloud",
+      "4.0",
+    ];
+
+    Array.prototype.sample_remove = function() {
+      var idx = Math.floor(Math.random() * this.length)
+      var sample = this[idx]
+      this.splice(idx, 1)
+      return sample
+    }
+
+    function generate() {
+      var future_checked = document.querySelector("#future").checked
+      var length = document.querySelector("#length").value
+      var name = generate_name([...words], length, future_checked);
+      document.querySelector("#name").innerText = name
+    }
+
+    function generate_name(words, length, future) {
+      var name = "Université"
+
+      if (future) {
+        name += " " + [...future_words].sample_remove()
+      }
+
+      for (let i = 0; i < length - 1; i++) {
+        var new_word = words.sample_remove()
+        name += " " + new_word
+      }
+
+      return name
+    }
+  </script>
+</head>
+
+<body>
+  <main>
+    <h1>GNUP : Générateur de nom d'université parisienne</h1>
+    <p>
+      Vous êtes une université parisienne et vous cherchez un nouveau nom ?
+      GNUP est fait pour vous !
+    </p>
+    <section>
+      <h2>Qu'est-ce que GNUP ?</h2>
+      <p>
+        GNUP est un outil qui élabore un nom d'université moderne et
+        respectueux des traditions : c'est exactement ce qu'il vous faut.
+      </p>
+      <p>
+        Deux options principales s'offrent à vous :
+      <ul>
+        <li>
+          le mode « Université du futur », pour un nom connecté
+          en direct avec le futur numérique du 21<sup>e</sup> siècle  ;
+        </li>
+        <li>
+          le mode « Université de tradition », pour un nom reflétant
+          l'histoire de votre institution.
+        </li>
+      </ul>
+      </p>
+      <p>
+        Par ailleurs, vous pouvez ajuster la longueur du nom généré,
+        afin qu'il tienne sur votre papier à en-tête ou les frontons
+        de vos bâtiments.
+      </p>
+    </section>
+    <section>
+      <h2>Comment ça marche ?</h2>
+      <p>
+        C'est tout simple : choisissez vos paramètres et
+        cliquez sur « Générer ».
+      </p>
+      <form>
+        <fieldset>
+          <legend>Votre type d'université :</legend>
+          <ul>
+            <li>
+              <input type="radio" id="future" name="type" value="future" checked="true" />
+              <label for="future">Université du futur</label>
+            </li>
+            <li>
+              <input type="radio" id="classic" name="type" value="classic" />
+              <label for="classic">Université de tradition</label>
+            </li>
+          </ul>
+        </fieldset>
+        <p>
+          <label for="length">Longueur du nom</label>
+          <input type="number" id="length" value="6" />
+        </p>
+        <p>
+          <input type="button" value="Générer" onclick="generate()" />
+        </p>
+      </form>
+      <p>Votre nom d'université : <strong id="name"></strong></p>
+    </section>
+  </main>
+</body>
+
+</html>
