@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>ZdS prime</title>
+  <meta charset="utf-8">
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+
+    h1,
+    h2 {
+      font-family: serif;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #sentence.loaded {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: auto;
+      margin-top: 30px;
+      width: 75%;
+      border: 5px solid black;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    const url = "https://zestedesavoir.com"
+
+    function isPrime(n) {
+      let i = 2;
+      while (i <= Math.sqrt(n)) {
+        if (n % i < 1) {
+          return false
+        }
+        i++
+      }
+      return n > 1
+    }
+
+    function getSentence(n) {
+      var root = `Le nombre de publications sur Zeste de Savoir (${n})`
+      if (isPrime(n)) {
+        return `${root} est premier ! 🙂`
+      } else {
+        return `${root} n'est pas premier... 🙁`
+      }
+    }
+
+    function query() {
+      var request = new XMLHttpRequest;
+      request.responseType = 'document';
+      request.onload = function() {
+        var sentence = request.response.querySelector(".write-tutorial-text>p").innerHTML
+        var str_npub = sentence.match(/(\d+)/g)[0]
+        var npub = Number(str_npub)
+        var elt = document.querySelector("#sentence")
+        elt.textContent = getSentence(npub)
+        elt.classList.add('loaded');
+      };
+      request.open("GET", url, true);
+      request.send();
+    }
+
+    window.addEventListener('load', query())
+  </script>
+</head>
+
+<body>
+  <main>
+    <h1>ZdS prime</h1>
+    <p>
+      <em>Le nombre de publications sur <a href="https://zestedesavoir.com">Zeste de Savoir</a>
+        est-il premier ?</em> Si vous vous posez ce genre de questions, vous êtes au bon endroit.
+    </p>
+    <p>
+
+    </p>
+    <div id="frame">
+      <p id="sentence">Chargement en cours...</p>
+    </div>
+  </main>
+</body>
+
+</html>
