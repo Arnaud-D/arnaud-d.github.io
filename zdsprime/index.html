@@ -36,8 +36,6 @@
     }
   </style>
   <script>
-    const url = "https://zestedesavoir.com"
-
     function isPrime(n) {
       let i = 2;
       while (i <= Math.sqrt(n)) {
@@ -50,7 +48,7 @@
     }
 
     function getSentence(n) {
-      var root = `Le nombre de publications sur Zeste de Savoir (${n})`
+      const root = `Le nombre de publications sur Zeste de Savoir (${n})`
       if (isPrime(n)) {
         return `${root} est premier ! 🙂`
       } else {
@@ -59,18 +57,18 @@
     }
 
     function query() {
-      var request = new XMLHttpRequest;
-      request.responseType = 'document';
-      request.onload = function() {
-        var sentence = request.response.querySelector(".write-tutorial-text>p").innerHTML
-        var str_npub = sentence.match(/(\d+)/g)[0]
-        var npub = Number(str_npub)
-        var elt = document.querySelector("#sentence")
-        elt.textContent = getSentence(npub)
-        elt.classList.add('loaded');
-      };
-      request.open("GET", url, true);
-      request.send();
+      fetch("https://zestedesavoir.com")
+        .then(response => response.text())
+        .then(text => {
+          const parser = new DOMParser();
+          const fetchedDocument = parser.parseFromString(text, "text/html");
+          const sentence = fetchedDocument.querySelector(".write-tutorial-text>p").innerHTML
+          const str_npub = sentence.match(/(\d+)/g)[0]
+          const npub = Number(str_npub)
+          const elt = document.querySelector("#sentence")
+          elt.textContent = getSentence(npub)
+          elt.classList.add('loaded');
+        })
     }
 
     window.addEventListener('load', query())
