@@ -6,29 +6,57 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
   <style>
+    body {
+      font-size: 20px;
+    }
+
     * {
       font-family: sans-serif;
+      color: #0a0a0a;
+    }
+
+    a:hover {
+      text-decoration:none;
     }
 
     main {
-      max-width: 800px;
+      max-width: 650px;
       margin: 0 auto;
-      padding: 10px;
+      padding: 0.5rem;
     }
 
     h1 {
       text-align: center;
     }
 
-    #sentence.loaded {
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin: auto;
-      margin-top: 30px;
-      width: 75%;
-      border: 5px solid black;
-      padding: 20px;
+    .content {
+      background: #f2f2f2;
+      border-radius: 0.8rem;
+      padding: 2rem;
+      box-shadow: 0px 0px 30px #bbbbbb;
+    }
+
+    .block {
+      display: flex;
+      margin-bottom: 2rem;
+    }
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+
+    aside {
+      flex: 0 0 15%;
+      min-width: 50px;
       text-align: center;
+      margin-right: 2rem;
+      font-size: 3.2rem;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+      line-height: 1.8rem;
     }
   </style>
   <script>
@@ -43,13 +71,26 @@
       return n > 1
     }
 
-    function getSentence(n) {
-      const root = `Le nombre de publications sur Zeste de Savoir (${n})`
-      if (isPrime(n)) {
-        return `${root} est premier ! 🙂`
-      } else {
-        return `${root} n'est pas premier... 🙁`
+    function nextPrime(npub) {
+      var n = npub + 1
+      while (!isPrime(n)) {
+        n += 1
       }
+      return n
+    }
+
+    function getSentencePrimeOrNot(isPrime) {
+      if (isPrime) {
+        return `et c'est un nombre premier !`
+      } else {
+        return `ce qui n'est pas un nombre premier…`
+      }
+    }
+
+    function getSentenceNextPrime(npub) {
+      const next = nextPrime(npub)
+      return `Le nombre premier suivant est ${next}.`
+
     }
 
     function query() {
@@ -61,9 +102,14 @@
           const sentence = fetchedDocument.querySelector(".write-tutorial-text>p").innerHTML
           const str_npub = sentence.match(/(\d+)/g)[0]
           const npub = Number(str_npub)
-          const elt = document.querySelector("#sentence")
-          elt.textContent = getSentence(npub)
-          elt.classList.add('loaded');
+          const npubPrime = isPrime(npub)
+          const elt_text = document.querySelector("#answer_text")
+          const fragment = getSentencePrimeOrNot(npubPrime)
+          const sentence1 = `Il y a ${npub} publications sur Zeste de Savoir, ${fragment}`
+          const sentence2 = getSentenceNextPrime(npub)
+          elt_text.innerHTML = `<p>${sentence1}</p><p>${sentence2}</p>`
+          const elt_side = document.querySelector("#answer_side")
+          elt_side.innerHTML = npubPrime ? "🙂" : "🙁"
         })
     }
 
@@ -74,15 +120,23 @@
 <body>
   <main>
     <h1>ZdS prime</h1>
-    <p>
-      <em>Le nombre de publications sur <a href="https://zestedesavoir.com">Zeste de Savoir</a>
-        est-il premier ?</em> Si vous vous posez ce genre de questions, vous êtes au bon endroit.
-    </p>
-    <p>
-
-    </p>
-    <div id="frame">
-      <p id="sentence">Chargement en cours...</p>
+    <div class="content">
+      <div class="block">
+        <aside>
+          ?
+        </aside>
+        <div>
+          <p>
+            Quelle est la primalité du nombre de publications sur <a href="https://zestedesavoir.com">Zeste de Savoir</a> ?
+          </p>
+        </div>
+      </div>
+      <div class="block">
+        <aside id="answer_side"></aside>
+        <div id="answer_text">
+          Chargement en cours...
+        </div>
+      </div>
     </div>
   </main>
 </body>
