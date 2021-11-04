@@ -3,139 +3,19 @@
 
 <head>
   <title>ZdS prime</title>
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
-  <style>
-    body {
-      font-size: 20px;
-    }
-
-    * {
-      font-family: sans-serif;
-      color: #0a0a0a;
-    }
-
-    a:hover {
-      text-decoration:none;
-    }
-
-    main {
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 0.5rem;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    .content {
-      background: #f2f2f2;
-      border-radius: 0.8rem;
-      padding: 2rem;
-      box-shadow: 0px 0px 30px #bbbbbb;
-    }
-
-    .block {
-      display: flex;
-      margin-bottom: 2rem;
-    }
-
-    *:last-child {
-      margin-bottom: 0;
-    }
-
-    aside {
-      flex: 0 0 15%;
-      min-width: 50px;
-      text-align: center;
-      margin-right: 2rem;
-      font-size: 3.2rem;
-    }
-
-    p {
-      margin-top: 0;
-      margin-bottom: 1.2rem;
-      line-height: 1.8rem;
-    }
-  </style>
-  <script>
-    function isPrime(n) {
-      let i = 2;
-      while (i <= Math.sqrt(n)) {
-        if (n % i < 1) {
-          return false
-        }
-        i++
-      }
-      return n > 1
-    }
-
-    function nextPrime(npub) {
-      var n = npub + 1
-      while (!isPrime(n)) {
-        n += 1
-      }
-      return n
-    }
-
-    function getSentencePrimeOrNot(isPrime) {
-      if (isPrime) {
-        return `et c'est un nombre premier !`
-      } else {
-        return `ce qui n'est pas un nombre premier…`
-      }
-    }
-
-    function getSentenceNextPrime(npub) {
-      const next = nextPrime(npub)
-      return `Le nombre premier suivant est ${next}.`
-
-    }
-
-    function query() {
-      fetch("https://zestedesavoir.com")
-        .then(response => response.text())
-        .then(text => {
-          const parser = new DOMParser();
-          const fetchedDocument = parser.parseFromString(text, "text/html");
-          const sentence = fetchedDocument.querySelector(".write-tutorial-text>p").innerHTML
-          const str_npub = sentence.match(/(\d+)/g)[0]
-          const npub = Number(str_npub)
-          const npubPrime = isPrime(npub)
-          const elt_text = document.querySelector("#answer_text")
-          const fragment = getSentencePrimeOrNot(npubPrime)
-          const sentence1 = `Il y a ${npub} publications sur Zeste de Savoir, ${fragment}`
-          const sentence2 = getSentenceNextPrime(npub)
-          elt_text.innerHTML = `<p>${sentence1}</p><p>${sentence2}</p>`
-          const elt_side = document.querySelector("#answer_side")
-          elt_side.innerHTML = npubPrime ? "🙂" : "🙁"
-        })
-    }
-
-    window.addEventListener('load', query)
-  </script>
+  <meta charset="utf-8">
+  <link href="style.css" rel="stylesheet">
+  <script src="script.js"></script>
 </head>
 
 <body>
-  <main>
+  <main class="content">
     <h1>ZdS prime</h1>
-    <div class="content">
-      <div class="block">
-        <aside>
-          ?
-        </aside>
-        <div>
-          <p>
-            Quelle est la primalité du nombre de publications sur <a href="https://zestedesavoir.com">Zeste de Savoir</a> ?
-          </p>
-        </div>
-      </div>
-      <div class="block">
-        <aside id="answer_side"></aside>
-        <div id="answer_text">
-          Chargement en cours...
-        </div>
+    <div class="block">
+      <aside id="answer_side"></aside>
+      <div id="answer_text">
+        Chargement en cours...
       </div>
     </div>
   </main>
