@@ -5,25 +5,7 @@
     <title>Simulateur de Pascaline</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
-    <style>
-        * {
-            font-family: sans-serif;
-        }
-        
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 10px;
-        }
-        
-        h1 {
-            text-align: center;
-        }
-        
-        svg {
-            border: 1px solid black;
-        }
-    </style>
+    <link href="../css/main.css" rel="stylesheet">
     <script>
         function Wheel() {
             this.position = 0;
@@ -79,6 +61,10 @@
         <h1>Simulateur de Pascaline</h1>
         <svg viewBox="-20 -20 330 120" id="pascaline">
       <style>
+        svg {
+          border: 1px solid black;
+        }
+
         .display_text {
           font-size: 20px;
           fill: white;
