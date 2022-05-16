@@ -2,55 +2,52 @@
 <html lang="fr">
 
 <head>
-  <title>Générateur de noms d'universités parisiennes</title>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
-  <meta charset="utf-8">
-  <link href="style.css" rel="stylesheet">
-  <script src="script.js"></script>
+    <title>Générateur de noms d'universités parisiennes</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js"></script>
 </head>
 
 <body>
-  <main>
-    <div id="generator">
-      <h1>Générateur de noms d'universités parisiennes</h1>
-      <form>
-        <p>
-          <label for="type">Je veux un nom d'université </label>
-          <select id="type">
+    <header>
+        <a href="..">Retour à l'accueil</a>
+    </header>
+    <main>
+        <div id="generator">
+            <h1>Générateur de noms d'universités parisiennes</h1>
+            <form>
+                <p>
+                    <label for="type">Je veux un nom d'université </label>
+                    <select id="type">
             <option value="future">du futur</option>
             <option value="classic">de tradition</option>
-          </select>
-          composé de <input type="number" id="length" value="4" /> mots.
-        </p>
+          </select> composé de <input type="number" id="length" value="4" /> mots.
+                </p>
+                <p>
+                    <input type="button" value="Générer" onclick="generate()" id="generate_button" />
+                </p>
+            </form>
+            <div id="result">
+                <h2>Votre nom d'université</h2>
+                <p id="name"></p>
+            </div>
+        </div>
         <p>
-          <input type="button" value="Générer" onclick="generate()" id="generate_button" />
+            Ce générateur élabore un nom d'université moderne et respectueux des traditions en vous proposant deux options :
         </p>
-      </form>
-      <div id="result">
-        <h2>Votre nom d'université</h2>
-        <p id="name"></p>
-      </div>
-    </div>
-      <p>
-        Ce générateur élabore un nom d'université moderne et
-        respectueux des traditions en vous proposant deux options :
-      </p>
-      <ul>
-        <li>
-          le mode « Université du futur », pour un nom connecté
-          en direct avec le futur numérique du 21<sup>e</sup> siècle ;
-        </li>
-        <li>
-          le mode « Université de tradition », pour un nom reflétant
-          l'histoire de votre institution.
-        </li>
-      </ul>
-      <p>
-        Vous pouvez également ajuster la longueur du nom généré,
-        afin qu'il tienne sur votre papier à en-tête ou les frontons
-        de vos bâtiments.
-      </p>
-  </main>
+        <ul>
+            <li>
+                le mode « Université du futur », pour un nom connecté en direct avec le futur numérique du 21<sup>e</sup> siècle ;
+            </li>
+            <li>
+                le mode « Université de tradition », pour un nom reflétant l'histoire de votre institution.
+            </li>
+        </ul>
+        <p>
+            Vous pouvez également ajuster la longueur du nom généré, afin qu'il tienne sur votre papier à en-tête ou les frontons de vos bâtiments.
+        </p>
+    </main>
 </body>
 
 </html>

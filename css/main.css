@@ -31,6 +31,11 @@ main {
     padding: var(--size-80);
 }
 
+header {
+    margin: 0 auto;
+    padding: var(--size-130) var(--size-80);
+}
+
 h1,
 h2,
 p,
@@ -58,6 +63,11 @@ p {
 
 a {
     color: rgb(65, 113, 153);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 article {

@@ -2,79 +2,82 @@
 <html lang="fr">
 
 <head>
-  <title>Simulateur de Pascaline</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
-  <style>
-    * {
-      font-family: sans-serif;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 10px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    svg {
-      border: 1px solid black;
-    }
-  </style>
-  <script>
-    function Wheel() {
-      this.position = 0;
-      this.rotate = function(steps) {
-        carry = Math.floor((this.position + steps) / 10);
-        this.position = (this.position + steps) % 10;
-        return carry
-      };
-    }
-
-    function Pascaline(n_wheels) {
-      this.n_wheels = n_wheels;
-      this.wheels = [];
-      for (i = 0; i < n_wheels; i++) {
-        this.wheels[i] = new Wheel();
-      }
-
-      this.rotate = function(wheel, steps) {
-        if (1 <= wheel && wheel <= n_wheels) {
-          carry = this.wheels[wheel - 1].rotate(steps);
-          if (wheel < n_wheels) {
-            this.rotate(wheel + 1, carry);
-          }
-        } else {
-          alert("Ne faites pas ça !")
+    <title>Simulateur de Pascaline</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+    <style>
+        * {
+            font-family: sans-serif;
         }
-      };
-    }
+        
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        function Wheel() {
+            this.position = 0;
+            this.rotate = function(steps) {
+                carry = Math.floor((this.position + steps) / 10);
+                this.position = (this.position + steps) % 10;
+                return carry
+            };
+        }
 
-    var p = new Pascaline(6);
+        function Pascaline(n_wheels) {
+            this.n_wheels = n_wheels;
+            this.wheels = [];
+            for (i = 0; i < n_wheels; i++) {
+                this.wheels[i] = new Wheel();
+            }
 
-    function rotate_callback(elt) {
-      var wheel = Number(elt.parentElement.getRootNode().host.dataset.wheel)
-      var steps = Number(elt.dataset.steps)
-      p.rotate(wheel, steps)
-      for (wheel = 0; wheel < p.n_wheels; wheel++) {
-        var display_elt = document.querySelector(`#display${wheel + 1}`)
-        var position = p.wheels[wheel].position
-        display_elt.textContent = String(position)
-        var reset_indicator = document.querySelector(`#reset${wheel + 1}`)
-        var delta = 360 / 10;
-        reset_indicator.transform.baseVal[2].setRotate(delta * position, -10, 0)
-      }
-    }
-  </script>
+            this.rotate = function(wheel, steps) {
+                if (1 <= wheel && wheel <= n_wheels) {
+                    carry = this.wheels[wheel - 1].rotate(steps);
+                    if (wheel < n_wheels) {
+                        this.rotate(wheel + 1, carry);
+                    }
+                } else {
+                    alert("Ne faites pas ça !")
+                }
+            };
+        }
+
+        var p = new Pascaline(6);
+
+        function rotate_callback(elt) {
+            var wheel = Number(elt.parentElement.getRootNode().host.dataset.wheel)
+            var steps = Number(elt.dataset.steps)
+            p.rotate(wheel, steps)
+            for (wheel = 0; wheel < p.n_wheels; wheel++) {
+                var display_elt = document.querySelector(`#display${wheel + 1}`)
+                var position = p.wheels[wheel].position
+                display_elt.textContent = String(position)
+                var reset_indicator = document.querySelector(`#reset${wheel + 1}`)
+                var delta = 360 / 10;
+                reset_indicator.transform.baseVal[2].setRotate(delta * position, -10, 0)
+            }
+        }
+    </script>
 </head>
 
 <body>
-  <main>
-    <h1>Simulateur de Pascaline</h1>
-    <svg viewBox="-20 -20 330 120" id="pascaline">
+    <header>
+        <a href="..">Retour à l'accueil</a>
+    </header>
+    <main>
+        <h1>Simulateur de Pascaline</h1>
+        <svg viewBox="-20 -20 330 120" id="pascaline">
       <style>
         .display_text {
           font-size: 20px;
@@ -165,55 +168,45 @@
       </g>
     </svg>
 
-    <h2>Mode d'emploi</h2>
+        <h2>Mode d'emploi</h2>
 
-    <h3>Remise à zéro</h3>
+        <h3>Remise à zéro</h3>
 
-    <p>Pour remettre à zéro :</p>
-    <ol>
-      <li>appuyez sur les boutons avec un contour rouge, l'afficheur ne doit afficher que des neufs ;</li>
-      <li>pressez « 1 » sur la roue la plus à droite, l'afficheur ne doit afficher que des zéros.</li>
-    </ol>
+        <p>Pour remettre à zéro :</p>
+        <ol>
+            <li>appuyez sur les boutons avec un contour rouge, l'afficheur ne doit afficher que des neufs ;</li>
+            <li>pressez « 1 » sur la roue la plus à droite, l'afficheur ne doit afficher que des zéros.</li>
+        </ol>
 
-    <h3>Addition</h3>
+        <h3>Addition</h3>
 
-    <p>Pour additionner deux nombres :</p>
-    <ol>
-      <li>remettez à zéro si nécessaire ;</li>
-      <li>
-        saisissez le premier nombre en utilisant les boutons,
-        le nombre apparaît sur l'afficheur ;
-      </li>
-      <li>
-        saississez le deuxième nombre en utilisant les boutons,
-        le résultat de l'addition apparaît sur l'afficheur.
-      </li>
-    </ol>
+        <p>Pour additionner deux nombres :</p>
+        <ol>
+            <li>remettez à zéro si nécessaire ;</li>
+            <li>
+                saisissez le premier nombre en utilisant les boutons, le nombre apparaît sur l'afficheur ;
+            </li>
+            <li>
+                saississez le deuxième nombre en utilisant les boutons, le résultat de l'addition apparaît sur l'afficheur.
+            </li>
+        </ol>
 
-    <h2>La pascaline</h2>
+        <h2>La pascaline</h2>
 
-    <p>
-      La <a href="https://fr.wikipedia.org/wiki/Pascaline">pascaline</a>
-      est une machine à calculer mécanique capable d'effectuer
-      des additions ou des soustractions. Le simulateur ne propose
-      que les additions.
-    </p>
-    <p>
-      La saisie des nombres s'effectue à l'aide de roues à rayon que l'on
-      tourne jusqu'à un butoir, de manière similaire à celle des
-      <a href="https://fr.wikipedia.org/wiki/Cadran_t%C3%A9l%C3%A9phonique">vieux
-        cadrans téléphoniques</a>. L'addition se fait directement à la saisie.
-      En pratique, la saisie du premier nombre revient à l'ajouter à zéro.
-      Sur le simulateur, la rotation des roues est remplacée par un bouton
-      à l'emplacement de la roue qu'on amènerait au butoir.
-    </p>
-    <p>
-      La procédure de remise à zéro fait d'abord saisir le complément à neuf,
-      indiqué sur les roues de la pascaline originale par des poinçons
-      et par les boutons au contour rouge dans le simulateur. On ajoute
-      ensuite 1, qui remet tout à zéro par report successif des retenues.
-    </p>
-  </main>
+        <p>
+            La <a href="https://fr.wikipedia.org/wiki/Pascaline">pascaline</a> est une machine à calculer mécanique capable d'effectuer des additions ou des soustractions. Le simulateur ne propose que les additions.
+        </p>
+        <p>
+            La saisie des nombres s'effectue à l'aide de roues à rayon que l'on tourne jusqu'à un butoir, de manière similaire à celle des
+            <a href="https://fr.wikipedia.org/wiki/Cadran_t%C3%A9l%C3%A9phonique">vieux
+        cadrans téléphoniques</a>. L'addition se fait directement à la saisie. En pratique, la saisie du premier nombre revient à l'ajouter à zéro. Sur le simulateur, la rotation des roues est remplacée par un bouton à l'emplacement de la
+            roue qu'on amènerait au butoir.
+        </p>
+        <p>
+            La procédure de remise à zéro fait d'abord saisir le complément à neuf, indiqué sur les roues de la pascaline originale par des poinçons et par les boutons au contour rouge dans le simulateur. On ajoute ensuite 1, qui remet tout à zéro par report successif
+            des retenues.
+        </p>
+    </main>
 </body>
 
 </html>
