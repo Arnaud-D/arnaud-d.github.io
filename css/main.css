@@ -94,3 +94,13 @@ article h2 a:hover {
 article p {
     margin: 0;
 }
+
+ul {
+    margin-bottom: var(--size-80);
+    line-height: var(--size-80);
+}
+
+li {
+    font-size: var(--size-120);
+    line-height: var(--size-80);
+}
