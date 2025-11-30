@@ -37,7 +37,7 @@ function query() {
     .then(text => {
       const parser = new DOMParser();
       const fetchedDocument = parser.parseFromString(text, "text/html");
-      const sentence = fetchedDocument.querySelector(".write-tutorial-text>p").innerHTML
+      const sentence = fetchedDocument.querySelector("p.lead").innerHTML
       const str_npub = sentence.match(/(\d+)/g)[0]
       const npub = Number(str_npub)
       const npubPrime = isPrime(npub)
